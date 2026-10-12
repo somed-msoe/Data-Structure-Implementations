@@ -1,5 +1,5 @@
 package com.del.ds;
 
-public class MinHeap {
+public class MyHashMap {
     
 }

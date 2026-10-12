@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Assumed API (ArrayList<T>):
- *   ArrayList()                 ArrayList(int initialCapacity)
+ * Assumed API (MyArrayList<T>):
+ *   MyArrayList()                 MyArrayList(int initialCapacity)
  *   void add(T value)              void add(int index, T value)
  *   T get(int index)               T set(int index, T value)   // returns old value
  *   T remove(int index)            // returns removed value
@@ -15,13 +15,13 @@ import org.junit.jupiter.api.Test;
  * Bad indices throw IndexOutOfBoundsException; a negative capacity throws
  * IllegalArgumentException. Null elements are allowed.
  */
-public class ArrayListTest {
+public class MyArrayListTest {
 
-    private ArrayList<Integer> arr;
+    private MyArrayList<Integer> arr;
 
     @BeforeEach
     void setUp() {
-        arr = new ArrayList<>();
+        arr = new MyArrayList<>();
     }
 
     private void fill(int n) {
@@ -40,12 +40,12 @@ public class ArrayListTest {
 
     @Test
     void negativeCapacityRejected() {
-        assertThrows(IllegalArgumentException.class, () -> new ArrayList<Integer>(-1));
+        assertThrows(IllegalArgumentException.class, () -> new MyArrayList<Integer>(-1));
     }
 
     @Test
     void zeroCapacityStillGrows() {
-        ArrayList<Integer> a = new ArrayList<>(0);
+        MyArrayList<Integer> a = new MyArrayList<>(0);
         for (int i = 0; i < 10; i++) {
             a.add(i);
         }
@@ -55,7 +55,7 @@ public class ArrayListTest {
 
     @Test
     void capacityOneGrows() {
-        ArrayList<Integer> a = new ArrayList<>(1);
+        MyArrayList<Integer> a = new MyArrayList<>(1);
         for (int i = 0; i < 100; i++) {
             a.add(i);
         }
@@ -104,7 +104,7 @@ public class ArrayListTest {
     @Test
     void getRejectsIndexInSpareCapacity() {
         // capacity is larger than size, but only indices < size are valid
-        ArrayList<Integer> a = new ArrayList<>(10);
+        MyArrayList<Integer> a = new MyArrayList<>(10);
         a.add(1);
         assertThrows(IndexOutOfBoundsException.class, () -> a.get(1));
     }
@@ -175,7 +175,7 @@ public class ArrayListTest {
 
     @Test
     void insertWhenFullTriggersGrowthAndKeepsOrder() {
-        ArrayList<Integer> a = new ArrayList<>(4);
+        MyArrayList<Integer> a = new MyArrayList<>(4);
         for (int i = 0; i < 4; i++) {
             a.add(i); // exactly full
         }
@@ -282,7 +282,7 @@ public class ArrayListTest {
 
     @Test
     void storesNullElements() {
-        ArrayList<String> s = new ArrayList<>();
+        MyArrayList<String> s = new MyArrayList<>();
         s.add("a");
         s.add(null);
         s.add("c");
@@ -296,7 +296,7 @@ public class ArrayListTest {
 
     @Test
     void instancesDoNotShareState() {
-        ArrayList<Integer> other = new ArrayList<>();
+        MyArrayList<Integer> other = new MyArrayList<>();
         arr.add(1);
         other.add(2);
         other.add(3);

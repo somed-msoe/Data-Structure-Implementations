@@ -1,5 +1,5 @@
 package com.del.ds;
 
-public class HashMapTest {
+public class MyTrie {
     
 }
