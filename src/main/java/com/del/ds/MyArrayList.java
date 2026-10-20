@@ -57,8 +57,20 @@ public class MyArrayList<T> {
      * @throws IndexOutOfBoundsException if {@code index < 0} or {@code index > size}
      */
     public void add(int index, T value) {
+         // [1, 2, 3, 4, 6, 7, 8, 9, null]
+         // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        checkPositionIndex(index);
 
-    }
+        if (size >= elements.length) {
+            grow();
+        }
+       
+        for (int i = size; i > index; i--) {
+            elements[i] = elements[i - 1];
+        }
+        elements[index] = value;
+        size++;
+    }   
 
     /**
      * Returns the element at the given position.
@@ -146,6 +158,19 @@ public class MyArrayList<T> {
      * @return the index of the first match, or -1 if the value is not present
      */
     public int indexOf(T value) {
+        if (value == null) {
+            for (int i = 0; i < size; i++) {
+                if (elements[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (value.equals(elements[i])) {
+                    return i;
+                }
+            }
+        }
         return -1;
     }
 
@@ -156,6 +181,9 @@ public class MyArrayList<T> {
      * @return {@code true} if {@link #indexOf} finds the value
      */
     public boolean contains(T value) {
+        if (indexOf(value) != -1) {
+            return true;
+        }
         return false;
     }
 
@@ -163,6 +191,10 @@ public class MyArrayList<T> {
      * Removes all elements. The list is empty afterwards.
      */
     public void clear() {
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        size = 0;
     }
 
     /**
@@ -172,7 +204,15 @@ public class MyArrayList<T> {
      */
     @Override
     public String toString() {
-        return "";
+        StringBuilder stringBuilder = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            if (i > 0) {
+                stringBuilder.append(", ");
+            }
+            stringBuilder.append(elements[i]);
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 
     /**
